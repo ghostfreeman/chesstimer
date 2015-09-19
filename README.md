@@ -11,7 +11,7 @@ The timer.js Class contains JSDoc blocks that further elaborate on method functi
 
 ## Known issues
 * It is possible to use the Console to run both clocks simultaneously. This is an overlooked consideration as its assumed the user will interact with the clocks directly via UI, but adding runtime checking via Semaphore should be considered in a future version.
-* The actual Timer class does contain some application-limiting logic, which assumes that there will be two timer Objects that must be reset when the clock reaches a Zero condition. A future version should use a callback to fire off a reset call, but was ignored as the requirements only specified for two Timer clocks (and there aren't a lot of <2 chess games in existence yet).
+* The actual Timer class does contain some application-limiting logic, which assumes that there will be two timer Objects that must be reset when the clock reaches a Zero condition. A future version should use a callback to fire off a reset call, but was ignored as the requirements only specified for two Timer clocks (and there aren't a lot of <2 player chess games in existence yet).
 * Forcing Use Strict, time constraints prevented this from being implemented in this version.
 
 ## Improving
