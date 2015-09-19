@@ -1,31 +1,51 @@
 /**
- * Timer class
+ * @file Timer class
+ * @author Cameron Kilgore <ghostfreeman at gmail dot com>
  */
-"use strict";
+//"use strict"
 
 /**
  * Constructor for the Timer Class
  * @param {[type]} name         [description]
  * @param {[type]} timerLength  Maximimum countdown length of the timer in seconds (default 60 seconds)
  */
-function Timer(name, timerLength) {
-  name = name;
-  length = typeof length !== 'undefined' ? counter : 60;
-  remaining = timerLength;
+function Timer(name, timerLength, interfaceID) {
+  console.log("Timer Instance Created");
+
+  this.name = name;
+  this.length = typeof timerLength !== 'undefined' ? timerLength : 60;
+  this.elementId = typeof interfaceID !== 'undefined' ? interfaceID : "clock1";
+  this.remaining = this.length;
 }
 
-Timer.prototype = {
-  constructor: Timer,
-  startTimer:function() {
+Timer.prototype.startTimer = function() {
+  setInterval(function () {
+    if (this.checkRemainingTime()) {
+      this.remaining--;
+      console.log("Remaining: "+remaining);
+    } else {
+      console.log("Time has run out");
+    }
+  }, 1000);
+}
 
-  },
-  pauseTimer:function() {
+Timer.prototype.pauseTimer = function() {
 
-  },
-  resumeTimer:function() {
+}
 
-  }
-  resetTimer:function() {
+Timer.prototype.resumeTimer = function() {
 
+}
+
+Timer.prototype.resetTimer = function() {
+  //Soft interfaces back to startTimer
+  this.startTimer();
+}
+
+Timer.prototype.checkRemainingTime = function() {
+  if (this.remaining != 0) {
+    return true;
+  } else {
+    return false;
   }
 }
