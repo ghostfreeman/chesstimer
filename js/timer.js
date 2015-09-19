@@ -21,22 +21,38 @@ function Timer(name, timerLength, interfaceID) {
 Timer.prototype.startTimer = function() {
   self = this; //TODO refactor as super() call
 
-  setInterval(function () {
+  this.intervalObj = setInterval(function () {
     if (self.checkRemainingTime()) {
       self.remaining--;
       console.log("Remaining: "+self.remaining);
+      self.formatTime(this.remaining);
     } else {
       console.log("Time has run out");
+      self.stopTimer();
     }
   }, 1000);
 }
 
-Timer.prototype.pauseTimer = function() {
+Timer.prototype.resumeTimer = function() {
+  this.startTimer(); //Requirements don't call for a pausing mode so we recreate a new setInterval
+}
+
+Timer.prototype.stopTimer = function() {
+  clearInterval(this.intervalObj);
+
+  this.formatTime(this.length);
+}
+
+Timer.prototype.timerMethod = function() {
 
 }
 
-Timer.prototype.resumeTimer = function() {
+Timer.prototype.formatTime = function(seconds) {
+  minutes = parseInt(seconds / 60)
+  seconds = seconds % 60;
 
+  //Return time to the interface
+  document.getElementById(this.elementId).innerHTML = minutes+":"+seconds;
 }
 
 Timer.prototype.resetTimer = function() {
