@@ -2,7 +2,6 @@
  * @file Timer class
  * @author Cameron Kilgore <ghostfreeman at gmail dot com>
  */
-//"use strict"
 
 /**
  * Constructor for the Timer Class
@@ -16,12 +15,11 @@ function Timer(name, timerLength, interfaceID, buttonID) {
   this.length = typeof timerLength !== 'undefined' ? timerLength : 60;
   this.elementId = typeof interfaceID !== 'undefined' ? interfaceID : "clock1";
   this.buttonId = typeof buttonID !== 'undefined' ? buttonID : "clockbutton1";
-  this.paused = false;
   this.remaining = this.length;
 }
 
 Timer.prototype.startTimer = function() {
-  self = this; //TODO refactor as super() call
+  self = this;
 
   this.intervalObj = setInterval(function () {
     if (self.checkRemainingTime()) {
@@ -36,20 +34,6 @@ Timer.prototype.startTimer = function() {
   }, 1000);
 }
 
-Timer.prototype.resumeTimer = function() {
-  console.debug("Remaining time for Timer", this.remaining);
-  this.intervalObj = setInterval(function () {
-    if (self.checkRemainingTime()) {
-      self.remaining--;
-      console.log("Remaining: "+self.remaining);
-      self.formatTime(self.remaining);
-    } else {
-      console.log("Time has run out");
-      self.stopTimer();
-    }
-  }, 1000);
-}
-
 Timer.prototype.stopTimer = function() {
   clearInterval(this.intervalObj);
   this.remaining = this.length;
@@ -57,7 +41,6 @@ Timer.prototype.stopTimer = function() {
 
 Timer.prototype.pauseTimer = function() {
   clearInterval(this.intervalObj);
-  this.paused = true;
 }
 
 Timer.prototype.formatTime = function(seconds) {
