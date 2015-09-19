@@ -19,10 +19,12 @@ function Timer(name, timerLength, interfaceID) {
 }
 
 Timer.prototype.startTimer = function() {
+  self = this; //TODO refactor as super() call
+
   setInterval(function () {
-    if (this.checkRemainingTime()) {
-      this.remaining--;
-      console.log("Remaining: "+remaining);
+    if (self.checkRemainingTime()) {
+      self.remaining--;
+      console.log("Remaining: "+self.remaining);
     } else {
       console.log("Time has run out");
     }
@@ -48,4 +50,5 @@ Timer.prototype.checkRemainingTime = function() {
   } else {
     return false;
   }
+  return false;
 }
