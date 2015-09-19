@@ -9,12 +9,14 @@
  * @param {[type]} name         [description]
  * @param {[type]} timerLength  Maximimum countdown length of the timer in seconds (default 60 seconds)
  */
-function Timer(name, timerLength, interfaceID) {
+function Timer(name, timerLength, interfaceID, buttonID) {
   console.log("Timer Instance Created");
 
   this.name = name;
   this.length = typeof timerLength !== 'undefined' ? timerLength : 60;
   this.elementId = typeof interfaceID !== 'undefined' ? interfaceID : "clock1";
+  this.buttonId = typeof buttonID !== 'undefined' ? buttonID : "clockbutton1";
+  this.paused = false;
   this.remaining = this.length;
 }
 
@@ -28,23 +30,38 @@ Timer.prototype.startTimer = function() {
       self.formatTime(self.remaining);
     } else {
       console.log("Time has run out");
+      window.alert("Time has run out, and "+this.name+" has won!");
       self.stopTimer();
     }
   }, 1000);
 }
 
 Timer.prototype.resumeTimer = function() {
-  this.startTimer(); //Requirements don't call for a pausing mode so we recreate a new setInterval
+  console.debug("Remaining time for Timer", this.remaining);
+  this.intervalObj = setInterval(function () {
+    if (self.checkRemainingTime()) {
+      self.remaining--;
+      console.log("Remaining: "+self.remaining);
+      self.formatTime(self.remaining);
+    } else {
+      console.log("Time has run out");
+      self.stopTimer();
+    }
+  }, 1000);
 }
 
 Timer.prototype.stopTimer = function() {
   clearInterval(this.intervalObj);
+  this.remaining = this.length;
+}
 
-  //this.formatTime(this.length);
+Timer.prototype.pauseTimer = function() {
+  clearInterval(this.intervalObj);
+  this.paused = true;
 }
 
 Timer.prototype.formatTime = function(seconds) {
-   console.debug("Seconds (start of method)", seconds);
+  console.debug("Seconds (start of method)", seconds);
   if (seconds > 60) {
     displayMinutes = parseInt(seconds / 60)
     displaySeconds = seconds % 60;
@@ -61,8 +78,9 @@ Timer.prototype.formatTime = function(seconds) {
 }
 
 Timer.prototype.resetTimer = function() {
-  //Soft interfaces back to startTimer
-  this.startTimer();
+  this.stopTimer();
+  this.formatTime(this.remaining);
+  console.log("The timer has been reset");
 }
 
 Timer.prototype.checkRemainingTime = function() {
