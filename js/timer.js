@@ -25,7 +25,7 @@ Timer.prototype.startTimer = function() {
     if (self.checkRemainingTime()) {
       self.remaining--;
       console.log("Remaining: "+self.remaining);
-      self.formatTime(this.remaining);
+      self.formatTime(self.remaining);
     } else {
       console.log("Time has run out");
       self.stopTimer();
@@ -40,19 +40,24 @@ Timer.prototype.resumeTimer = function() {
 Timer.prototype.stopTimer = function() {
   clearInterval(this.intervalObj);
 
-  this.formatTime(this.length);
-}
-
-Timer.prototype.timerMethod = function() {
-
+  //this.formatTime(this.length);
 }
 
 Timer.prototype.formatTime = function(seconds) {
-  minutes = parseInt(seconds / 60)
-  seconds = seconds % 60;
+   console.debug("Seconds (start of method)", seconds);
+  if (seconds > 60) {
+    displayMinutes = parseInt(seconds / 60)
+    displaySeconds = seconds % 60;
+    console.debug("Minutes", displayMinutes);
+  } else {
+    displayMinutes = "";
+    displaySeconds = seconds;
+  }
+
+  console.debug("Seconds", seconds);
 
   //Return time to the interface
-  document.getElementById(this.elementId).innerHTML = minutes+":"+seconds;
+  document.getElementById(this.elementId).innerHTML = displayMinutes+":"+displaySeconds;
 }
 
 Timer.prototype.resetTimer = function() {
