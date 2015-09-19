@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chess Timer</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/design.css" />
+
+    <script type="text/javascript" src="js/timer.js"></script>
+  </head>
+
+  <body>
+    <div class="timer_wrapper">
+      <div class="timer_1 timer" id="timer_1">
+        <h2 id="timer_1_clock"></h2>
+        <button id="timer_1_button" onclick="timer_1_turn();">Turn</button>
+      </div>
+
+      <div class="timer_2 timer" id="timer_2">
+        <h2 id="timer_2_clock"></h2>
+        <button id="timer_2_button" onclick="timer_2_turn();">Turn</button>
+      </div>
+    </div>
+
+    <div class="timer_global_controls">
+      <button id="reset_timers" onclick="timer_reset_click();">Reset All Timers</button>
+    </div>
+
+    <script type="text/javascript">
+
+      // Load in two objects from timer.js
+      var timer1 = new Timer("Left", 240, "timer_1_clock", "timer_1_button");
+      var timer2 = new Timer("Right", 240, "timer_2_clock", "timer_2_button");
+
+      function timer_1_turn() {
+        console.log("Timer 1 Clicked");
+
+        //Clicked
+        timer1.pauseTimer();
+        timer2.startTimer();
+
+        //Disable button
+        document.getElementById(timer1.buttonId).disabled = true;
+        document.getElementById(timer2.buttonId).disabled = false;
+      }
+
+      function timer_2_turn() {
+        console.log("Timer 2 Clicked");
+
+        timer2.pauseTimer();
+        timer1.startTimer();
+
+        //Disable button
+        document.getElementById(timer2.buttonId).disabled = true;
+        document.getElementById(timer1.buttonId).disabled = false;
+      }
+
+      function reset_timers() {
+        timer1.resetTimer();
+        timer2.resetTimer();
+      }
+
+      function timer_reset_click() {
+        console.log("Timers Reset");
+        reset_timers();
+        document.getElementById(timer2.buttonId).disabled = false;
+        document.getElementById(timer1.buttonId).disabled = false;
+      }
+
+      window.onload = function() {
+        timer1.formatTime(timer1.length);
+        timer2.formatTime(timer2.length);
+      }
+
+    </script>
+
+  </body>
+</html>
